@@ -40,7 +40,7 @@ group :development, :test do
 
   gem 'rspec-rails'
   gem 'guard-rspec'
-  
+
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
 
@@ -55,4 +55,3 @@ group :production do
   gem 'pg', '~> 0.21' # for Heroku deployment
   gem 'rails_12factor'
 end
-
