@@ -11,14 +11,25 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.movies(params[:ratings], params[:sort_by])
-    @all_ratings = Movie.all_ratings
-     
-    @filter = if params[:ratings].nil?
-      @all_ratings
-    else  
-      params[:ratings]
+    options = Movie.selected(params,session)
+    
+    if options[:redirect]
+      flash.keep
+      
+      redirect_to(
+           :action => params[:action], :controller => params[:controller],
+           :ratings => options[:ratings], :sort_by => options[:sort_by]
+        ) 
     end  
+   
+    @all_ratings = Movie.all_ratings
+    @sort_type = options[:sort_by]
+    @filter = options[:ratings]
+    @movies = Movie.movies(@filter, options[:sort_by])
+    
+    session[:ratings] = options[:ratings]
+    session[:sort_by] = options[:sort_by]
+       
     
   end
 
